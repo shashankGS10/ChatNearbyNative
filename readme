@@ -1,0 +1,68 @@
+## React Native Expo App
+
+This is a sample React Native app built with Expo.
+
+### Prerequisites
+
+Before getting started, make sure you have the following installed on your machine:
+
+- Node.js
+- Yarn
+- Expo CLI
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/react-native-expo-app.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd react-native-expo-app
+   ```
+
+3. Install the dependencies:
+
+   ```bash
+   yarn install
+   ```
+
+### Running the App
+
+To run the app, follow these steps:
+
+1. Start the Expo development server:
+
+   ```bash
+   yarn start
+   ```
+
+   This will start the development server and provide you with a QR code.
+
+2. Install the Expo Go app on your mobile device from the [App Store](https://apps.apple.com/us/app/expo-go/id982107779) or [Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US).
+
+3. Scan the QR code displayed in the terminal using the Expo Go app.
+
+   Alternatively, you can open the Expo Go app and use the "Scan QR Code" option to scan the QR code.
+
+4. The app will now be launched on your mobile device.
+
+### Additional Scripts
+
+In the project directory, you can run the following commands:
+
+- `yarn start`: Starts the development server and opens the Expo developer tools in your browser.
+- `yarn android`: Builds the app for Android and opens it on an Android device or emulator.
+- `yarn ios`: Builds the app for iOS and opens it on the iOS Simulator if you're on a Mac.
+- `yarn test`: Runs the test suite for the app.
+
+### License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
+---
+
+Feel free to update the README with your project-specific information and customize it according to your needs.
