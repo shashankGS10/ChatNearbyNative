@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
-import MessageItem from '../components/MessageItem';
 
 const ChatApp = () => {
   const [messages, setMessages] = useState([]);
@@ -19,6 +18,7 @@ const ChatApp = () => {
         const replyMessage = {
           id: Date.now().toString(),
           message: data.body,
+          isUser: false, // Added isUser flag to differentiate user and reply messages
         };
 
         setMessages((prevMessages) => [...prevMessages, replyMessage]);
@@ -34,6 +34,7 @@ const ChatApp = () => {
     const newMessage = {
       id: Date.now().toString(),
       message: inputText,
+      isUser: true, // Set isUser flag to true for user messages
     };
 
     setMessages((prevMessages) => [newMessage, ...prevMessages]);
@@ -47,22 +48,32 @@ const ChatApp = () => {
     try {
       const response = await fetch('https://jsonplaceholder.typicode.com/comments/2');
       const data = await response.json();
-
+  
       if (data) {
+        const trimmedReply = data.body.trim().split(' ').slice(0, 5).join(' '); // Trims and generates a reply with 3-5 words
         const replyMessage = {
           id: Date.now().toString(),
-          message: data.body,
+          message: trimmedReply,
+          isUser: false,
         };
-
+  
         setMessages((prevMessages) => [replyMessage, ...prevMessages]);
       }
     } catch (error) {
       console.error('Error sending auto-reply:', error);
     }
   };
+  
 
   const renderMessageItem = ({ item }) => {
-    return <MessageItem message={item.message} />;
+    const containerStyle = item.isUser ? styles.userMessageContainer : styles.replyMessageContainer;
+    const textStyle = item.isUser ? styles.userMessageText : styles.replyMessageText;
+
+    return (
+      <View style={[styles.messageContainer, containerStyle]}>
+        <Text style={textStyle}>{item.message}</Text>
+      </View>
+    );
   };
 
   return (
@@ -105,13 +116,35 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 80, // Adjust as needed for padding and input container height
   },
+  messageContainer: {
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 8,
+    alignSelf: 'flex-start',
+    maxWidth: '80%',
+  },
+  userMessageContainer: {
+    backgroundColor: '#007AFF',
+    alignSelf: 'flex-end',
+  },
+  replyMessageContainer: {
+    backgroundColor: '#8c00ff',
+  },
+  userMessageText: {
+    fontSize: 16,
+    color: '#FFF',
+  },
+  replyMessageText: {
+    fontSize: 16,
+    color: '#FFF',
+  },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 8,
     backgroundColor: '#FFF',
     borderTopWidth: 1,
-    borderTopColor: '#E8E8E8',
+    borderTopColor: '#8c00ff',
   },
   input: {
     flex: 1,
@@ -121,7 +154,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 16,
     marginRight: 8,
-    color: '#333',
+    color: '#000',
   },
   sendButton: {
     backgroundColor: '#007AFF',
